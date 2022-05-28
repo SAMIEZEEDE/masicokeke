@@ -1,0 +1,38 @@
+<p>payment works!</p>
+
+<form #paymentForm="ngForm">
+    <div class="card-expiry" fxLayout="row" fxLayoutAlign="space-around center" fxLayout.md="column">
+
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Credit Card Number</mat-label>
+            <input matInput type="number" required [(ngModel)]="paymentDetails.payload.cardNumber" name="cardNumber">
+            <mat-error *ngIf="paymentForm.controls['cardNumber']?.errors?.['required']">cardNumber required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" required [(ngModel)]="paymentDetails.payload.cardExpiry" name="cardExpiry">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error [hidden]="paymentForm.invalid || paymentForm.pristine">card Expiry date Expected</mat-error>
+        </mat-form-field>
+
+    </div>
+    <div class="nameCard-cvc" fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Name on Credit Card</mat-label>
+            <input matInput type="text" [(ngModel)]="paymentDetails.payload.cardName" class="form-control" name="cardName" minlength="3" maxlength="20" required>
+            <mat-error *ngIf="paymentForm.controls['cardName']?.errors?.['required']">CARD Name required</mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>CVC</mat-label>
+            <input matInput type="number" class="form-control" maxlength="3" [(ngModel)]="paymentDetails.payload.cvc" name="cvc" minlength="3" required placeholder="CVC">
+            <mat-error *ngIf="paymentForm.controls['cvc']?.errors?.['required']">CVC required</mat-error>
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext (click)="Submit(paymentForm)" [disabled]="paymentForm.invalid">continue</button>
+    </div>
+</form>

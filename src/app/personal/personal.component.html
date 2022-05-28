@@ -1,0 +1,66 @@
+<p>personal works!</p>
+
+<form #personalDetailsForm="ngForm">
+
+    <div class="first-last" fxLayout="row" fxLayoutAlign="space-around center">
+        <div class="first">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>First name</mat-label>
+                <input matInput type="text" [(ngModel)]="personalDetails.payload.firstname" class="form-control" name="firstname" required minlength="3" maxlength="20">
+                <mat-error *ngIf="personalDetailsForm.controls['firstname']?.errors?.['required']">Firstname required</mat-error>
+                <mat-error *ngIf="personalDetailsForm.controls['firstname']?.errors?.['length']">at least 3 charactors Expected</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="last">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Surname</mat-label>
+                <input matInput type="text" [(ngModel)]="personalDetails.payload.lastname" class="form-control" name="lastname" minlength="3" maxlength="20" required>
+                <mat-error *ngIf="personalDetailsForm.controls['lastname']?.errors?.['required']">Last Name required</mat-error>
+                <mat-error *ngIf="personalDetailsForm.controls['lastname']?.errors?.['minlength']">at least 3 charactors Expected</mat-error>
+            </mat-form-field>
+
+        </div>
+    </div>
+    <div class="phone-age" fxLayout="row" fxLayoutAlign="space-around center">
+        <div class="phone">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Telephone</mat-label>
+                <input matInput [(ngModel)]="personalDetails.payload.phonenumber" name="phonenumber" minlength="10" maxlength="10" type="tel" placeholder="234-555-1234" required>
+                <mat-error *ngIf="personalDetailsForm.controls['phonenumber']?.errors?.['required']">phone number required</mat-error>
+                <mat-error *ngIf="personalDetailsForm.controls['phonenumber']?.errors?.['minlength']">10 digits Expected</mat-error>
+
+            </mat-form-field>
+        </div>
+        <div class="age">
+            <mat-form-field appearance="outline">
+                <mat-label>AGE</mat-label>
+                <input matInput type="number" class="form-control" maxlength="2" [(ngModel)]="personalDetails.payload.age" name="age" minlength="1" required placeholder="16">
+                <mat-error *ngIf="personalDetailsForm.controls['age']?.errors?.['required']">you should be at least 16 yrs</mat-error>
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div class="date-time" fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-form-field appearance="outline">
+            <mat-label>Choose a date</mat-label>
+            <input matInput required [(ngModel)]="personalDetails.payload.date" name="date" [matDatepicker]="picker1">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+            <mat-error *ngIf="personalDetailsForm.controls['date']?.errors?.['required']">date required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Time</mat-label>
+            <input matInput type="time" required [(ngModel)]="personalDetails.payload.time" name="time">
+            <mat-error [hidden]="personalDetailsForm.invalid || personalDetailsForm.pristine">Time Expected</mat-error>
+        </mat-form-field>
+
+    </div>
+
+    <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext (click)="Submit(personalDetailsForm)" [disabled]="personalDetailsForm.invalid">continue</button>
+    </div>
+
+</form>

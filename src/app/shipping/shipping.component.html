@@ -1,0 +1,49 @@
+<p>shipping works!</p>
+
+
+<form #shippingForm="ngForm">
+
+    <div class="house-street" fxLayout="row" fxLayoutAlign="space-around center">
+        <div class="house">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>House number</mat-label>
+                <textarea matInput type="text" placeholder="Ex. 100 Main St" required [(ngModel)]="shippingDetails.payload.houseNumber" name="houseNumber">1600 </textarea>
+                <mat-error *ngIf="shippingForm.controls['houseNumber']?.errors?.['required']">House number required</mat-error>
+            </mat-form-field>
+
+        </div>
+        <div class="street">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Street Address</mat-label>
+                <textarea matInput type="text" placeholder="Ex. 100 Main St" required [(ngModel)]="shippingDetails.payload.streetAddress" name="streetAddress">Amphitheatre Pkwy</textarea>
+                <mat-error *ngIf="shippingForm.controls['streetAddress']?.errors?.['required']">streetAddress required</mat-error>
+            </mat-form-field>
+
+        </div>
+
+    </div>
+
+    <div class="town-area" fxLayout="row" fxLayoutAlign="space-around center">
+        <div class="town">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Town</mat-label>
+                <input matInput placeholder="Ex. San Francisco" required [(ngModel)]="shippingDetails.payload.town" name="town">
+                <mat-error *ngIf="shippingForm.controls['town']?.errors?.['required']">town required</mat-error>
+            </mat-form-field>
+
+        </div>
+        <div class="area-code">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Postal Code</mat-label>
+                <input matInput maxlength="4" placeholder="Ex. 94105" value="94043" required [(ngModel)]="shippingDetails.payload.areaCode" name="areaCode">
+                <mat-error *ngIf="shippingForm.controls['areaCode']?.errors?.['required']">areaCode required</mat-error>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext (click)="Submit(shippingForm)" [disabled]="shippingForm.invalid">continue</button>
+    </div>
+</form>

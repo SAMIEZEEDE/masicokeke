@@ -1,0 +1,86 @@
+nav {
+  place-content: flex start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-shadow: 20px 20px 60px #063048, -20px -20px 60px #084062;
+          box-shadow: 20px 20px 60px #063048, -20px -20px 60px #084062;
+  padding: 15px;
+  height: 80px;
+}
+
+nav img {
+  width: 60px;
+  height: auto;
+}
+
+p {
+  padding-top: 19px;
+  margin-left: 12px;
+  font-size: 18px;
+}
+
+p span {
+  padding-top: 7px;
+  font-size: 24px;
+}
+
+.width50 {
+  width: 50%;
+}
+
+.width100 {
+  width: 100%;
+}
+
+.container {
+  height: calc(100vh - 80px);
+}
+
+.container .left-col {
+  margin-top: 1em;
+  height: calc(100vh - 80px);
+  text-align: center;
+  padding: 1em 25px 0 25px;
+}
+
+.container .left-col img {
+  width: 100%;
+}
+
+.container .right-col {
+  height: calc(100vh - 80px);
+  text-align: center;
+  padding: 1em 25px 0 25px;
+  margin-top: 1em;
+}
+
+.container .content {
+  background-color: #4c3e3e;
+}
+
+.container .content .mat-stepper-horizontal {
+  margin-top: 8px;
+}
+
+.container .content .mat-form-field {
+  margin-top: 16px;
+}
+
+.mat-stepper-vertical {
+  background-color: #073855;
+}
+
+::ng-deep .mat-vertical-stepper-header {
+  pointer-events: none !important;
+}
+/*# sourceMappingURL=order.component.css.map */

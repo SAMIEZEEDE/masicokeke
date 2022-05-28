@@ -1,0 +1,63 @@
+<div class="mainContainer">
+
+    <nav class="navbar" fxLayout="row" fxLayoutAlign="start centers">
+        <img src="https://masicoceke.web.app/assets/masicoceke-logo.png" alt="">
+        <p><span>MASICOCEKE</span> |cleanliness is next to Godliness|</p>
+    </nav>
+
+    <div class="container width100" fxLayout="row" fxLayoutAlign="center center">
+        <div class="left-col width50">
+            <p>Always keep your clothes clean with our amazing washing powder</p>
+            <img src="https://masicoceke.web.app/assets/masicoceke-logo.png" alt="">
+            <p><span> MASICOCEKE</span><br>| Washing Powder |<br>Cleanliness is next to Godliness</p>
+
+        </div>
+        <div class="right-col width50">
+            <p>Order your washing powder Now</p>
+            <div class="content">
+                <mat-stepper orientation="vertical">
+                    <mat-step>
+                        <ng-template matStepLabel>Brand and Size</ng-template>
+                        <app-brand-size (newBrandEvent)="Submit($event)"></app-brand-size>
+                    </mat-step>
+
+                    <mat-step>
+                        <ng-template matStepLabel>Fill out your details</ng-template>
+                        <app-personal (newpersonlEvent)="Submit($event)"></app-personal>
+                    </mat-step>
+
+                    <mat-step>
+                        <ng-template matStepLabel>Shipping Details</ng-template>
+                        <app-shipping (newshippingEvent)="Submit($event)"></app-shipping>
+                    </mat-step>
+
+                    <mat-step>
+                        <ng-template matStepLabel>Payment details</ng-template>
+                        <app-payment (newPaymentEvent)="Submit($event)"></app-payment>
+                    </mat-step>
+
+                    <mat-step>
+                        <ng-template matStepLabel>Confirm and Order</ng-template>
+                        <!-- <ul>
+                            <li *ngFor="let item of userDetails.orderForm">{{Submit($event)}}</li>
+                        </ul> -->
+                        <h4>ITEM DETAILS</h4>
+                        <p>Size:{{orderForm.brandAndSize.size}}<br>Brand:{{orderForm.brandAndSize.brand}}<br>Quantity:{{orderForm.brandAndSize.amount}}</p><br>
+                        <h4>PERSONAL DETAILS</h4>
+                        <p>First Name:{{orderForm.personalDetails.firstname}}<br>Last Name:{{orderForm.personalDetails.lastname}}<br>Date:{{orderForm.personalDetails.date}}<br>Age:{{orderForm.personalDetails.age}}<br>Time:{{orderForm.personalDetails.time}}<br>Phone
+                            Number:{{orderForm.personalDetails.phonenumber}}
+                        </p><br>
+                        <h4>SHIPPING DETAILS</h4>
+                        <p>House Number:{{orderForm.shipphingDetails.houseNumber}}<br>Street Address:{{orderForm.shipphingDetails.streetAddress}}<br>Town:{{orderForm.shipphingDetails.town}}<br>Area Code:{{orderForm.shipphingDetails.areaCode}}</p><br>
+                        <h4>PAYMENT DETAILS</h4>
+                        <p>Card Number:{{orderForm.paymentDetails.cardNumber}}<br>CVC:{{orderForm.paymentDetails.cvc}}<br>Date:Card Name{{orderForm.paymentDetails.cardName}}<br>Card Expiry:{{orderForm.paymentDetails.cardExpiry}}</p>
+                        <div>
+                            <button mat-button matStepperPrevious>Back</button>
+                            <button mat-button matStepperNext (click)="DetailsPaerser()">confirm Details</button>
+                        </div>
+                    </mat-step>
+                </mat-stepper>
+            </div>
+        </div>
+    </div>
+</div>
