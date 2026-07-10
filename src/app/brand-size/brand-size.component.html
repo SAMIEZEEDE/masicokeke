@@ -28,8 +28,8 @@
 
     </div>
 
-    <div>
-        <button mat-button (click)="brandForm.reset()">Clear</button>
-        <button mat-button matStepperNext (click)="Submit(brandForm)" [disabled]="brandForm.invalid">Next</button>
+    <div fxLayoutGap="10px">
+        <button mat-button class="custom-btn btn-size" (click)="brandForm.reset()">Clear</button>
+        <button mat-button matStepperNext class="custom-btn btn-size" (click)="Submit(brandForm)" [disabled]="brandForm.invalid">Next</button>
     </div>
 </form>

@@ -13,3 +13,23 @@ body {
     color: white;
     font-size: medium;
 }
+.custom-btn {
+  background-color: #c2185b; // Pink
+  color: white;
+  margin-right: 10px;
+}
+.btn-size {
+  border: solid 1px #cccccc6b !important;
+    border-radius: 8px;
+    height: 40px;
+}
+
+.custom-btn:hover:not(:disabled) {
+  background-color: #d81b60;
+}
+
+.custom-btn:disabled {
+  background-color: #b5c4cc !important;
+  color: white !important;
+  cursor: not-allowed;
+}
