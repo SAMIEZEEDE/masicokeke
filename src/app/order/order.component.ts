@@ -105,22 +105,54 @@ export class OrderComponent implements OnInit {
 
   }
   async SubmitPayment() {
-    const { error } = await this.stripe!.confirmPayment({
-      elements: this.elements,
-      confirmParams: {
-        return_url: 'http://localhost:4200/payment-success'
-      },
-      redirect: 'if_required'
-    });
 
-    if (error) {
-      console.error(error);
-      return;
-    }
-    console.log('Payment Successful');
-    // Save your order here
+  const { error, paymentIntent } = await this.stripe!.confirmPayment({
+    elements: this.elements,
+    redirect: 'if_required'
+  });
+
+  if (error) {
+    console.error(error);
+    return;
   }
 
+  if (paymentIntent?.status === 'succeeded') {
+
+    console.log('Payment Successful');
+
+    // Save order here
+    this.saveOrder(paymentIntent.id);
+
+  }
+
+}
+saveOrder(paymentIntentId:string){
+
+    const order = {
+
+    customer: this.orderForm.personalDetails,
+
+    shipping: this.orderForm.shipphingDetails,
+
+    items: this.orderForm.brandAndSize,
+
+    payment: {
+      paymentIntentId,
+      status: 'paid'
+    }
+
+  };
+
+  this.store.createOrder(order).subscribe({
+    next: (response) => {
+      console.log(response);
+      alert('Order saved successfully!');
+    },
+    error: (error) => {
+      console.error(error);
+    }
+  });
+};
   getdata() {
     this.store.getdata().subscribe((res: any) => {
       console.log(res);
