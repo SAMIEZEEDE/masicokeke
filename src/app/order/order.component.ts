@@ -1,63 +1,128 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { APIService } from '../api.service';
+import { APIService } from '../services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from '../../environments/environment';
+import { StripeService } from '../services/stripe.service';
+import { firstValueFrom } from 'rxjs';
+import {
+  loadStripe,
+  Stripe,
+  StripeElements,
+  StripeElementsOptions,
+  StripePaymentElement
+} from '@stripe/stripe-js';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
-  user:any={
+  user: any = {
   }
-  userDetails:any[]=[];
-  orderForm:any={
-    brandAndSize:{},
-    personalDetails:{},
-    shipphingDetails:{},
-    paymentDetails:{},
+  userDetails: any[] = [];
+  orderForm: any = {
+    brandAndSize: {},
+    personalDetails: {},
+    shipphingDetails: {},
+    paymentDetails: {},
   }
- 
+  stripe: Stripe | null = null;
+  elements!: StripeElements;
+  paymentElement!: StripePaymentElement;
+  clientSecret!: string;
 
-  constructor(private store:APIService) { }
+  constructor(private store: APIService, private snackBar: MatSnackBar, private StripeService: StripeService) { }
 
-  ngOnInit(): void {
-    // this.getdata()
+  async ngOnInit() {
+    this.stripe = await loadStripe(environment.stripePublishableKey);
   }
-  
-  Submit(data:any){
-    //console.log('data' ,data)
-    if(data.formName === "brandForm"){
+  delete(index: number): void {
+    this.orderForm.brandAndSize.splice(index, 1);
+
+    this.snackBar.open('Item successfully deleted', 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar']
+    });
+  }
+  calculateGrandTotal(index: number) {
+    console.log(this.orderForm.brandAndSize[index]);
+  }
+  adjustQuantity(item: any, action: string, index: number): void {
+    if (item.quantity > 1 && action == "remove") {
+      item.quantity--;
+    }
+    if (action == "add") {
+      item.quantity++;
+    }
+    item.amount = item.quantity * item.unitPrice;
+    this.orderForm.brandAndSize[index].amount = item.amount;
+
+  }
+
+
+  Submit(data: any) {
+    if (data.formName === "brandForm") {
       this.orderForm.brandAndSize = data.payload
     }
-    if(data.formName === "personalDetailsForm"){
+    if (data.formName === "personalDetailsForm") {
       this.orderForm.personalDetails = data.payload
     }
-    if(data.formName === "shippingForm"){
+    if (data.formName === "shippingForm") {
       this.orderForm.shipphingDetails = data.payload
     }
-    if(data.formName === "paymentForm"){
-      this.orderForm.paymentDetails = data.payload
+    if (data.formName === "paymentForm") {
+      this.orderForm.paymentDetails = data.payload;
     }
-    console.log('orderForm' ,this.orderForm)
-    }
-   // console.log('form value ',this.loginModel)
-  //  console.log('details',formInfo.value)
-  //this.user +=formInfo;
-  // this.user={
-  //   BrandAndSize:this.brand,
-  //   personalInfo:this.ItemsModel,
-  //   shippingInfo:this.shippingDetails,
-  //   paymentInfo:this.cardDetails
+    console.log('orderForm', this.orderForm)
+  }
 
-  // }
-  // }
-  DetailsPaerser(){
-    this.userDetails.push(this.orderForm)
-    console.log('details',this.userDetails)
-    this.store.pass(this.userDetails)
-  };
-  getdata(){
-    this.store.getdata().subscribe((res:any)=>{
+  async initializePayment() {
+
+    try {
+
+      const response: any = await firstValueFrom(
+        this.StripeService.createPaymentIntent({
+          items: this.orderForm.brandAndSize
+        })
+      );
+
+      this.clientSecret = response.clientSecret;
+
+      this.elements = this.stripe!.elements({
+        clientSecret: this.clientSecret
+      });
+
+      this.paymentElement = this.elements.create('payment');
+
+      this.paymentElement.mount('#payment-element');
+
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+  async SubmitPayment() {
+    const { error } = await this.stripe!.confirmPayment({
+      elements: this.elements,
+      confirmParams: {
+        return_url: 'http://localhost:4200/payment-success'
+      },
+      redirect: 'if_required'
+    });
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+    console.log('Payment Successful');
+    // Save your order here
+  }
+
+  getdata() {
+    this.store.getdata().subscribe((res: any) => {
       console.log(res);
     })
   }

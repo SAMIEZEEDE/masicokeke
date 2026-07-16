@@ -1,28 +1,32 @@
-<p>brand-size works!</p>
-
 <form #brandForm="ngForm">
     <ng-template matStepLabel>Brand and Size</ng-template>
     <div class="size-amount-brand" fxLayout="row" fxLayoutAlign="space-around centers" fxLayout.lt-lg="column">
-        <mat-form-field appearance="outline">
-            <mat-label>choose size</mat-label>
-            <mat-select [(ngModel)]="chooseSize.payload.size" aria-required="true" name="size" disableRipple>
-                <mat-option value="one">2kg R40</mat-option>
-                <mat-option value="two">5kg R100</mat-option>
-                <mat-error *ngIf="brandForm.controls['size']?.errors?.['required']">required</mat-error>
-            </mat-select>
-        </mat-form-field>
-
+        
         <mat-form-field appearance="outline">
             <mat-label>choose Brand</mat-label>
-            <mat-select [(ngModel)]="chooseSize.payload.brand" required name="brand">
-                <mat-option *ngFor="let x of brand " value="`{{x}}`">{{x}}</mat-option>
+            <mat-select [(ngModel)]="item.brand" required name="brand" (selectionChange)="getSelectedBrandSpec()">
+                <mat-option *ngFor="let x of brand " value="{{x}}">{{x}}</mat-option>
             </mat-select>
             <mat-error [hidden]="brandForm.invalid || brandForm.pristine">choose brand Expected</mat-error>
         </mat-form-field>
 
+        <mat-form-field appearance="outline">
+            <mat-label>choose size</mat-label>
+            <mat-select [(ngModel)]="item.size" aria-required="true" name="size" disableRipple>
+                <mat-option *ngFor="let x of sizes " value={{x.size}}>{{x.size}} - (R{{x.price}})</mat-option>
+                <mat-error *ngIf="brandForm.controls['size']?.errors?.['required']">required</mat-error>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Quantity</mat-label>
+            <input matInput type="number" class="example-right-align" placeholder="0" [(ngModel)]="item.quantity" required name="quantity" (input)="calculateAmount()">
+            <mat-error [hidden]="brandForm.invalid || brandForm.pristine">Quantity Expected</mat-error>
+        </mat-form-field>
+
         <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Amount</mat-label>
-            <input matInput type="number" class="example-right-align" placeholder="0" [(ngModel)]="chooseSize.payload.amount" required name="amount">
+            <input matInput type="number" class="example-right-align" placeholder="0" [(ngModel)]="item.amount" required name="amount" [disabled]="true">
             <mat-error [hidden]="brandForm.invalid || brandForm.pristine">Quantity Expected</mat-error>
         </mat-form-field>
 
@@ -31,5 +35,6 @@
     <div fxLayoutGap="10px">
         <button mat-button class="custom-btn btn-size" (click)="brandForm.reset()">Clear</button>
         <button mat-button matStepperNext class="custom-btn btn-size" (click)="Submit(brandForm)" [disabled]="brandForm.invalid">Next</button>
+        <button mat-button class="custom-btn btn-size" (click)="addToCart()">Add +</button>
     </div>
 </form>

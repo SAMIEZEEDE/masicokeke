@@ -14,9 +14,9 @@
         </div>
         <div class="right-col width60">
             <div class="p-word width80">
-              <p >Order your washing powder Now</p>  
+                <p>Order your washing powder Now</p>
             </div>
-            
+
             <div class="content">
                 <mat-stepper orientation="vertical">
                     <mat-step>
@@ -35,27 +35,121 @@
                     </mat-step>
 
                     <mat-step>
-                        <ng-template matStepLabel>Payment details</ng-template>
-                        <app-payment (newPaymentEvent)="Submit($event)"></app-payment>
+                        <ng-template matStepLabel>Confirm and Order</ng-template>
+                        <h4>ITEMS DETAILS</h4>
+
+                        <div *ngFor="let item of orderForm.brandAndSize; let i = index">
+
+                            <h5>
+                                Item {{ i + 1 }} <mat-icon class="delete-icon" (click)="delete(i)"
+                                    matTooltip="Delete Item" matTooltipPosition="above">delete</mat-icon>
+                            </h5>
+                            <table class="summary-table">
+                                <tr>
+                                    <td><strong>Brand</strong></td>
+                                    <td>{{ item.brand }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Size</strong></td>
+                                    <td>{{ item.size }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Quantity</strong></td>
+                                    <td><mat-icon class="adjust"
+                                            (click)="adjustQuantity(item,'remove',i)">remove</mat-icon>{{ item.quantity
+                                        }}<mat-icon class="adjust" (click)="adjustQuantity(item,'add',i)">add</mat-icon>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Amount</strong></td>
+                                    <td>{{ item.amount | currency:'ZAR' }}</td>
+                                </tr>
+                            </table>
+
+                            <br>
+
+                        </div>
+
+                        <h4>PERSONAL DETAILS</h4>
+                        <table class="summary-table">
+                            <tr>
+                                <td><strong>First Name</strong></td>
+                                <td>{{orderForm.personalDetails.firstname}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Last Name</strong></td>
+                                <td>{{orderForm.personalDetails.lastname}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Time</strong></td>
+                                <td>{{orderForm.personalDetails.time}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phone</strong></td>
+                                <td>{{orderForm.personalDetails.phonenumber}}</td>
+                            </tr>
+                        </table>
+                        <h4>SHIPPING DETAILS</h4>
+                        <table class="summary-table">
+                            <tr>
+                                <td><strong>House Number</strong></td>
+                                <td>{{orderForm.shipphingDetails.houseNumber}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>street Address</strong></td>
+                                <td>{{orderForm.shipphingDetails.streetAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Town</strong></td>
+                                <td>{{orderForm.shipphingDetails.town}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Code</strong></td>
+                                <td>{{orderForm.shipphingDetails.areaCode}}</td>
+                            </tr>
+                        </table>
+                        <!-- <h4>PAYMENT DETAILS</h4>
+                        <table class="summary-table">
+                            <tr>
+                                <td><strong>Card Holder</strong></td>
+                                <td>{{orderForm.paymentDetails.cardName}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Card Number</strong></td>
+                                <td>{{ orderForm.paymentDetails.cardNumber}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Expiry</strong></td>
+                                <td>{{ orderForm.paymentDetails.cardExpiry | date}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Expiry</strong></td>
+                                <td>{{ orderForm.paymentDetails.cardExpiry}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CVC</strong></td>
+                                <td>{{orderForm.paymentDetails.cvc}}</td>
+                            </tr>
+                        </table> -->
+                        <div fxLayoutGap="10px">
+                            <button mat-button class="btn-size" matStepperPrevious>Back</button>
+                            <button mat-button class="custom-btn btn-size" matStepperNext (click)="initializePayment()">confirm Details</button>
+                        </div>
                     </mat-step>
 
                     <mat-step>
-                        <ng-template matStepLabel>Confirm and Order</ng-template>
-                        <h4>ITEM DETAILS</h4>
-                        <p>Size:{{orderForm.brandAndSize.size}}<br>Brand:{{orderForm.brandAndSize.brand}}<br>Quantity:{{orderForm.brandAndSize.amount}}</p><br>
-                        <h4>PERSONAL DETAILS</h4>
-                        <p>First Name:{{orderForm.personalDetails.firstname}}<br>Last Name:{{orderForm.personalDetails.lastname}}<br>Date:{{orderForm.personalDetails.date}}<br>Age:{{orderForm.personalDetails.age}}<br>Time:{{orderForm.personalDetails.time}}<br>Phone
-                            Number:{{orderForm.personalDetails.phonenumber}}
-                        </p><br>
-                        <h4>SHIPPING DETAILS</h4>
-                        <p>House Number:{{orderForm.shipphingDetails.houseNumber}}<br>Street Address:{{orderForm.shipphingDetails.streetAddress}}<br>Town:{{orderForm.shipphingDetails.town}}<br>Area Code:{{orderForm.shipphingDetails.areaCode}}</p><br>
+                        <ng-template matStepLabel>Payment details</ng-template>
                         <h4>PAYMENT DETAILS</h4>
-                        <p>Card Number:{{orderForm.paymentDetails.cardNumber}}<br>CVC:{{orderForm.paymentDetails.cvc}}<br>Date:Card Name{{orderForm.paymentDetails.cardName}}<br>Card Expiry:{{orderForm.paymentDetails.cardExpiry}}</p>
+                        <div class="payment-container">
+                        <div id="payment-element"></div>
+                        </div>
+
                         <div fxLayoutGap="10px">
-                            <button mat-button class="btn-size" matStepperPrevious>Back</button>
-                            <button mat-button class="custom-btn btn-size" matStepperNext (click)="DetailsPaerser()">confirm Details</button>
+                            <button mat-button class="custom-btn btn-size" matStepperPrevious>Back</button>
+                            <button mat-button class="custom-btn btn-size" class="custom-btn" matStepperNext (click)="SubmitPayment()">Pay Now</button>
                         </div>
                     </mat-step>
+
                 </mat-stepper>
             </div>
         </div>

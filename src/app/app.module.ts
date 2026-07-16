@@ -20,6 +20,10 @@ import { BrandSizeComponent } from './brand-size/brand-size.component';
 import { PersonalComponent } from './personal/personal.component';
 import { ShippingComponent } from './shipping/shipping.component';
 import { PaymentComponent } from './payment/payment.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +49,10 @@ import { PaymentComponent } from './payment/payment.component';
     BrowserAnimationsModule,
     FlexLayoutModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatIconModule,
+    MatTooltipModule ,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],
