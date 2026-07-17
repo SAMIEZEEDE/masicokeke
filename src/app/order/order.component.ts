@@ -146,7 +146,12 @@ saveOrder(paymentIntentId:string){
   this.store.createOrder(order).subscribe({
     next: (response) => {
       console.log(response);
-      alert('Order saved successfully!');
+      this.snackBar.open('Order saved successfully!', 'Close', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['green-snackbar']
+    });
     },
     error: (error) => {
       console.error(error);

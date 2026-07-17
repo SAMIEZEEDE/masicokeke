@@ -151,3 +151,11 @@ p {
     font-size: 17Px;
     cursor: pointer;
 }
+.green-snackbar {
+    background-color: green;
+    color: #fff !important;
+    font-weight: 500;
+    position: absolute;
+    top: 87px;
+    right: 0;
+}
