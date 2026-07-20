@@ -3,9 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'https://ecommerce-backend-tdqu.onrender.com',
+  stripePublishableKey: 'pk_test_51TtRnURYnZIf8ttsPIu8oEZ1SEis2zPSpappjVWt2lOwqaNXNJ0Rxfn0uJZ3GuWbeQC9ndkdWgymmb8MkXsSRhGA00gmS1542w'
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

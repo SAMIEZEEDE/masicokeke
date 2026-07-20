@@ -1,13 +1,16 @@
 nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     place-content: flex start;
     align-items: center;
     flex-direction: row;
     box-sizing: border-box;
     display: flex;
-    // border: solid white;
     box-shadow: 20px 20px 60px #063048, -20px -20px 60px #084062;
     padding: 15px;
     height: 80px;
+
     img {
         width: 60px;
         height: auto;
@@ -18,15 +21,25 @@ p {
     padding-top: 19px;
     margin-left: 12px;
     font-size: 18px;
+
     span {
         padding-top: 7px;
         font-size: 24px;
     }
 }
-
-.width50 {
-    width: 50%;
+.width80 {
+    width: calc(100% - 20px);
+   margin-left:  20px;
 }
+
+.width60 {
+    width: 60%;
+}
+
+.width40 {
+    width: 40%;
+}
+
 
 .width100 {
     width: 100%;
@@ -34,28 +47,46 @@ p {
 
 .container {
     height: calc(100vh - 80px);
+
     .left-col {
-        margin-top: 1em;
-        // border: solid white;
         height: calc(100vh - 80px);
         text-align: center;
-        padding: 1em 25px 0 25px;
+
         img {
             width: 100%;
         }
+
+        margin: 0;
+        padding: 0;
     }
-    .right-col {
-        // border: solid white;
-        height: calc(100vh - 80px);
-        text-align: center;
-        padding: 1em 25px 0 25px;
-        margin-top: 1em;
-    }
+
+        .right-col {
+            height: calc(100vh - 80px);
+            text-align: center;
+            overflow-y: scroll;
+            margin: 0;
+            padding: 0;
+    
+            .p-word {
+                    position: sticky;
+                    height: 55px;
+                    top: 0;
+                    z-index: 1000;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+                    background-color: #c2185b; // Pink
+            
+                }
+        }
+    
     .content {
+        // overflow-y: hidden
+
         background-color: rgb(76, 62, 62);
+
         .mat-stepper-horizontal {
             margin-top: 8px;
         }
+
         .mat-form-field {
             margin-top: 16px;
         }
@@ -68,4 +99,63 @@ p {
 
 ::ng-deep .mat-vertical-stepper-header {
     pointer-events: none !important;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.summary-table td {
+  padding: 10px 14px;
+  border: 1px solid #e0e0e0;
+}
+
+.summary-table tr:nth-child(even) {
+  background: #c2185b;
+}
+
+.summary-table td:first-child {
+  width: 35%;
+  font-weight: 600;
+  color: white;
+  background: #c2185b
+}
+
+.summary-table td:last-child {
+  color: white;
+}
+.delete-icon {
+  cursor: pointer;
+  color:  white;
+  margin-left: 8px;
+  vertical-align: middle;
+  font-size: 20px;
+}
+
+.delete-icon:hover {
+  opacity: 0.7;
+}
+.success-snackbar {
+  --mdc-snackbar-container-color: #4caf50 !important;
+  --mat-snack-bar-button-color: #ffffff !important;
+  --mdc-snackbar-supporting-text-color: #ffffff !important;
+}
+.success-snackbar {
+  background: #4caf50 !important;
+  color: white !important;
+}
+.adjust{
+    font-size: 17Px;
+    cursor: pointer;
+}
+.green-snackbar {
+    background-color: green;
+    color: #fff !important;
+    font-weight: 500;
+    position: absolute;
+    top: 87px;
+    right: 0;
 }

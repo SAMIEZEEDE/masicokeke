@@ -42,8 +42,8 @@
 
     </div>
 
-    <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext (click)="Submit(shippingForm)" [disabled]="shippingForm.invalid">continue</button>
+    <div fxLayoutGap="10px">
+        <button mat-button class="custom-btn btn-size" matStepperPrevious>Back</button>
+        <button mat-button class="custom-btn btn-size" matStepperNext (click)="Submit(shippingForm)" [disabled]="shippingForm.invalid">continue</button>
     </div>
 </form>
