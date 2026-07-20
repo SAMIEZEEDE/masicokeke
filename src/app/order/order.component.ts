@@ -152,7 +152,6 @@ export class OrderComponent implements OnInit {
           verticalPosition: 'top',
           panelClass: ['green-snackbar']
         });
-        this.orderForm.reset();
         window.location.reload();
       },
       error: (error) => {
