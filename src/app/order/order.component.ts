@@ -152,6 +152,7 @@ saveOrder(paymentIntentId:string){
       verticalPosition: 'top',
       panelClass: ['green-snackbar']
     });
+    this.orderForm.reset();
     },
     error: (error) => {
       console.error(error);
