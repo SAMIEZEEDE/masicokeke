@@ -47,9 +47,6 @@ export class OrderComponent implements OnInit {
       panelClass: ['success-snackbar']
     });
   }
-  calculateGrandTotal(index: number) {
-    console.log(this.orderForm.brandAndSize[index]);
-  }
   adjustQuantity(item: any, action: string, index: number): void {
     if (item.quantity > 1 && action == "remove") {
       item.quantity--;
@@ -76,7 +73,6 @@ export class OrderComponent implements OnInit {
     if (data.formName === "paymentForm") {
       this.orderForm.paymentDetails = data.payload;
     }
-    console.log('orderForm', this.orderForm)
   }
 
   async initializePayment() {
@@ -106,62 +102,57 @@ export class OrderComponent implements OnInit {
   }
   async SubmitPayment() {
 
-  const { error, paymentIntent } = await this.stripe!.confirmPayment({
-    elements: this.elements,
-    redirect: 'if_required'
-  });
+    const { error, paymentIntent } = await this.stripe!.confirmPayment({
+      elements: this.elements,
+      redirect: 'if_required'
+    });
 
-  if (error) {
-    console.error(error);
-    return;
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    if (paymentIntent?.status === 'succeeded') {
+      // Save order here
+      this.saveOrder(paymentIntent.id);
+
+    }
+
   }
-
-  if (paymentIntent?.status === 'succeeded') {
-
-    console.log('Payment Successful');
-
-    // Save order here
-    this.saveOrder(paymentIntent.id);
-
-  }
-
-}
-saveOrder(paymentIntentId:string){
+  saveOrder(paymentIntentId: string) {
 
     const order = {
 
-    customer: this.orderForm.personalDetails,
+      customer: this.orderForm.personalDetails,
 
-    shipping: this.orderForm.shipphingDetails,
+      shipping: this.orderForm.shipphingDetails,
 
-    items: this.orderForm.brandAndSize,
+      items: this.orderForm.brandAndSize,
 
-    payment: {
-      paymentIntentId,
-      status: 'paid'
-    }
+      payment: {
+        paymentIntentId,
+        status: 'paid'
+      }
 
-  };
+    };
 
-  this.store.createOrder(order).subscribe({
-    next: (response) => {
-      console.log(response);
-      this.snackBar.open('Order saved successfully!', 'Close', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-      panelClass: ['green-snackbar']
+    this.store.createOrder(order).subscribe({
+      next: (response) => {
+        this.snackBar.open('Order saved successfully!', 'Close', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['green-snackbar']
+        });
+        window.location.reload();
+      },
+      error: (error) => {
+        console.error(error);
+      }
     });
-    this.orderForm.reset();
-    },
-    error: (error) => {
-      console.error(error);
-    }
-  });
-};
+  };
   getdata() {
     this.store.getdata().subscribe((res: any) => {
-      console.log(res);
     })
   }
 

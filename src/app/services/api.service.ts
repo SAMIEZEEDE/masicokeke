@@ -10,9 +10,7 @@ export class APIService {
  private apiUrl = `${environment.apiUrl}/api/orders`;
   constructor(private http:HttpClient) { }
   pass(data:any){
-    console.log(data)
     return this.http.post('https://cl2.io/ebd2d5bc-f69f-4d68-94ee-fca80fee467e/',data).subscribe(res =>{
-      console.log(res)
       
     })
   }
