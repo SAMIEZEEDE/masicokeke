@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class APIService {
- private apiUrl = environment.apiUrl;
+ private apiUrl = `${environment.apiUrl}/api/orders`;
   constructor(private http:HttpClient) { }
   pass(data:any){
     console.log(data)
