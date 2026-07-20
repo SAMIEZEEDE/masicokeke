@@ -47,9 +47,6 @@ export class OrderComponent implements OnInit {
       panelClass: ['success-snackbar']
     });
   }
-  calculateGrandTotal(index: number) {
-    console.log(this.orderForm.brandAndSize[index]);
-  }
   adjustQuantity(item: any, action: string, index: number): void {
     if (item.quantity > 1 && action == "remove") {
       item.quantity--;
@@ -76,7 +73,6 @@ export class OrderComponent implements OnInit {
     if (data.formName === "paymentForm") {
       this.orderForm.paymentDetails = data.payload;
     }
-    console.log('orderForm', this.orderForm)
   }
 
   async initializePayment() {
@@ -117,9 +113,6 @@ export class OrderComponent implements OnInit {
     }
 
     if (paymentIntent?.status === 'succeeded') {
-
-      console.log('Payment Successful');
-
       // Save order here
       this.saveOrder(paymentIntent.id);
 
@@ -145,7 +138,6 @@ export class OrderComponent implements OnInit {
 
     this.store.createOrder(order).subscribe({
       next: (response) => {
-        console.log(response);
         this.snackBar.open('Order saved successfully!', 'Close', {
           duration: 3000,
           horizontalPosition: 'center',
@@ -161,7 +153,6 @@ export class OrderComponent implements OnInit {
   };
   getdata() {
     this.store.getdata().subscribe((res: any) => {
-      console.log(res);
     })
   }
 
